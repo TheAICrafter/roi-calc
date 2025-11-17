@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:title" content="SYNTARA ROI Calculator">
+    <meta property="og:description" content="See how much your organization wastes on password-related issues. Drag the slider to calculate your savings.">
+    <meta property="og:type" content="website">
+    <title>Password reset ROI Calculator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        input[type="range"] {
+            background: linear-gradient(to right, #818cf8 0%, #818cf8 50%, #e0e7ff 50%, #e0e7ff 100%);
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+        }
+        
+        input[type="range"]::-webkit-slider-thumb {
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: white;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            border: 2px solid #818cf8;
+        }
+        
+        input[type="range"]::-moz-range-thumb {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: white;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            border: 2px solid #818cf8;
+        }
+    </style>
+</head>
+<body class="bg-gray-950">
+
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-b from-gray-900 to-gray-950 text-white py-20">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-5xl sm:text-6xl font-extrabold">
+                 The hidden cost of password resets
+            </h1>
+        </div>
+    </section>
+
+    <!-- Problem Section -->
+    <section class="bg-gray-900 py-16">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div class="bg-gray-800 p-6 rounded-lg border border-indigo-500/20">
+                    <p class="text-4xl font-bold text-indigo-400">$70</p>
+                    <p class="text-gray-300 mt-2">Average cost per password reset</p>
+                </div>
+                <div class="bg-gray-800 p-6 rounded-lg border border-indigo-500/20">
+                    <p class="text-4xl font-bold text-indigo-400">40%</p>
+                    <p class="text-gray-300 mt-2">Of help desk calls are password-related</p>
+                </div>
+                <div class="bg-gray-800 p-6 rounded-lg border border-indigo-500/20">
+                    <p class="text-4xl font-bold text-indigo-400">11h</p>
+                    <p class="text-gray-300 mt-2">Per employee lost to password resets yearly</p>
+                </div>
+                <div class="bg-gray-800 p-6 rounded-lg border border-indigo-500/20">
+                    <p class="text-4xl font-bold text-indigo-400">$5.2M</p>
+                    <p class="text-gray-300 mt-2">What the average company spends annually on password-related tickets</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ROI Calculator Section -->
+    <section id="roi" class="py-24 bg-gray-950 text-white">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-4xl font-extrabold">Your ROI is not theoretical. It's immediate.</h2>
+            <p class="mt-4 text-lg text-indigo-200">Drag the slider to see how much you'd save by eliminating password resets.</p>
+
+            <div class="mt-12">
+                <label for="employeeSlider" class="block text-lg font-medium text-white mb-4">
+                    Number of employees: <span id="employeeCount" class="font-bold text-indigo-300">500</span>
+                </label>
+                <input 
+                    id="employeeSlider" 
+                    type="range" 
+                    min="50" 
+                    max="10000" 
+                    step="50" 
+                    value="500" 
+                    class="w-full h-3 rounded-lg appearance-none cursor-pointer"
+                >
+            </div>
+
+            <div class="mt-10 p-8 bg-white text-slate-900 rounded-lg shadow-2xl">
+                <p class="text-xl text-gray-600">Your estimated annual savings:</p>
+                <p class="text-6xl font-extrabold text-indigo-600 my-4">
+                    $<span id="savingsAmount">70,000</span>
+                </p>
+                <p class="mt-4 text-sm text-gray-600">
+                    Based on Gartner's $70/ticket estimate, assuming 2 password-related issues per employee, per year.
+                </p>
+                
+                <div class="mt-8 grid grid-cols-2 gap-4 text-left border-t pt-6">
+                    <div>
+                        <p class="text-gray-500 text-sm">Password resets annually</p>
+                        <p class="text-2xl font-bold text-indigo-600" id="totalResets">1,000</p>
+                    </div>
+                    <div>
+                        <p class="text-gray-500 text-sm">Hours wasted per year</p>
+                        <p class="text-2xl font-bold text-indigo-600" id="hoursWasted">275</p>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-950 border-t border-gray-800 py-8">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-gray-400 text-sm">
+            <p>Passwordless authentication framework</p>
+            <p class="mt-2">© 2025. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        const slider = document.getElementById('employeeSlider');
+        const employeeCount = document.getElementById('employeeCount');
+        const savingsAmount = document.getElementById('savingsAmount');
+        const totalResets = document.getElementById('totalResets');
+        const hoursWasted = document.getElementById('hoursWasted');
+
+        function updateSliderBackground() {
+            const value = (slider.value - slider.min) / (slider.max - slider.min) * 100;
+            slider.style.background = `linear-gradient(to right, #818cf8 0%, #818cf8 ${value}%, #e0e7ff ${value}%, #e0e7ff 100%)`;
+        }
+
+        function calculateROI() {
+            const employees = parseInt(slider.value);
+            const passwordsPerEmployee = 2; // 2 resets per employee per year
+            const costPerReset = 70;
+            const hoursPerReset = 0.275; // 11 hours / 40 resets average
+
+            const resets = employees * passwordsPerEmployee;
+            const savings = resets * costPerReset;
+            const hours = Math.round(resets * hoursPerReset);
+
+            employeeCount.textContent = employees.toLocaleString();
+            savingsAmount.textContent = savings.toLocaleString();
+            totalResets.textContent = resets.toLocaleString();
+            hoursWasted.textContent = hours.toLocaleString();
+
+            updateSliderBackground();
+        }
+
+        slider.addEventListener('input', calculateROI);
+        calculateROI();
+    </script>
+
+</body>
+</html>
